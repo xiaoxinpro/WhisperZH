@@ -31,17 +31,18 @@ namespace
 
 int LanguageDropdown::getInitialSelection( AppState& state ) const
 {
-	constexpr uint32_t english = 0x6E65;
+	//constexpr uint32_t english = 0x6E65;
+	constexpr uint32_t chinese = 0x687A;
 
 	// Load preference from the registry
 	uint32_t id = state.languageRead();
 	if( id == UINT_MAX )
-		id = english;
+		id = chinese;
 
 	auto it = std::find( keys.begin(), keys.end(), id );
 	if( it == keys.end() )
 	{
-		id = english;
+		id = chinese;
 		it = std::find( keys.begin(), keys.end(), id );
 		assert( it != keys.end() );
 	}

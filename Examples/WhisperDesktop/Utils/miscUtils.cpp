@@ -29,7 +29,7 @@ CString formatErrorMessage( HRESULT hr )
 		message.TrimRight();
 	}
 	else
-		message.Format( L"Error code %i (0x%08X)", hr, hr );
+		message.Format( L"错误代码 %i (0x%08X)", hr, hr );
 
 	return message;
 }
@@ -37,9 +37,9 @@ CString formatErrorMessage( HRESULT hr )
 void reportFatalError( const char* what, HRESULT hr )
 {
 	CString message;
-	message.Format( L"%S\n%S\n", "Unable to start the application.", what );
+	message.Format( L"%S\n%S\n", "无法启动应用程序。", what );
 	message += formatErrorMessage( hr );
-	::MessageBox( nullptr, message, L"Whisper Desktop Startup", MB_OK | MB_ICONERROR );
+	::MessageBox( nullptr, message, L"启动 Whisper Desktop", MB_OK | MB_ICONERROR );
 }
 
 namespace
@@ -54,8 +54,8 @@ namespace
 	static const std::array<sImplString, 3> s_implStrings =
 	{
 		sImplString{ eModelImplementation::GPU, L"GPU" },
-		sImplString{ eModelImplementation::Hybrid, L"Hybrid" },
-		sImplString{ eModelImplementation::Reference, L"Reference" },
+		sImplString{ eModelImplementation::Hybrid, L"混合" },
+		sImplString{ eModelImplementation::Reference, L"CPU" },
 	};
 }
 
@@ -221,7 +221,7 @@ bool getSaveFileName( HWND owner, LPCTSTR title, LPCTSTR filter, CString& path, 
 void reportError( HWND owner, LPCTSTR text, LPCTSTR title, HRESULT hr )
 {
 	if( nullptr == title )
-		title = L"Operation Failed";
+		title = L"操作失败";
 
 	CString message = text;
 	message.TrimRight();
@@ -248,7 +248,7 @@ bool isInvalidTranslate( HWND owner, uint32_t lang, bool translate )
 	if( lang != english )
 		return false;
 
-	LPCTSTR message = L"The translate feature translates speech to English.\nIt’s not available when the audio language is already English.";
-	MessageBox( owner, message, L"Incompatible parameters", MB_OK | MB_ICONINFORMATION );
+	LPCTSTR message = L"翻译功能将语音翻译成英语。\n当音频语言已经是英语时，它不可用。";
+	MessageBox( owner, message, L"不兼容的参数", MB_OK | MB_ICONINFORMATION );
 	return true;
 }

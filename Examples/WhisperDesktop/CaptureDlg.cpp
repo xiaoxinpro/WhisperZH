@@ -60,7 +60,7 @@ LRESULT CaptureDlg::OnInitDialog( UINT nMessage, WPARAM wParam, LPARAM lParam, B
 	HRESULT hr = work.create( this );
 	if( FAILED( hr ) )
 	{
-		reportError( m_hWnd, L"CreateThreadpoolWork failed", nullptr, hr );
+		reportError( m_hWnd, L"´´½¨Ïß³Ì³ØÊ§°Ü", nullptr, hr );
 		EndDialog( IDCANCEL );
 	}
 
@@ -123,7 +123,7 @@ void CaptureDlg::onDeviceRefresh()
 	const size_t len = devices.size();
 	if( len == 0 )
 	{
-		MessageBox( L"No capture devices found on this computer.\nIf you have a USB microphone, connect it to this PC,\nand press “refresh” button.",
+		MessageBox( L"ÔÚÕâÌ¨¼ÆËã»úÉÏÃ»ÓĞ·¢ÏÖÒôÆµÊäÈëÉè±¸¡£\nÈç¹ûÄãÓĞUSBÂó¿Ë·ç£¬°ÑËüÁ¬½Óµ½ÕâÌ¨µçÄÔÉÏ£¬\n²¢µã»÷Ë¢ĞÂ°´Å¥¡£",
 			L"Capture Devices", MB_OK | MB_ICONWARNING );
 	}
 	else

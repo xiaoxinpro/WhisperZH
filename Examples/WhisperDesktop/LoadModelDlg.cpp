@@ -38,9 +38,9 @@ LRESULT LoadModelDlg::OnInitDialog( UINT nMessage, WPARAM wParam, LPARAM lParam,
 	HRESULT hr = work.create( this );
 	if( FAILED( hr ) )
 	{
-		CString text = L"CreateThreadpoolWork failed\n";
+		CString text = L"创建线程池失败\n";
 		text += formatErrorMessage( hr );
-		::MessageBox( m_hWnd, text, L"Unable to load the model", MB_OK | MB_ICONWARNING );
+		::MessageBox( m_hWnd, text, L"无法加载模型", MB_OK | MB_ICONWARNING );
 		return TRUE;
 	}
 
@@ -70,7 +70,7 @@ LRESULT LoadModelDlg::OnBrowse( UINT, INT, HWND, BOOL& bHandled )
 
 	CString path;
 	modelPath.GetWindowText( path );
-	if( !getOpenFileName( m_hWnd, L"Select a GGML Model File", L"Binary files (*.bin)\0*.bin\0\0", path ) )
+	if( !getOpenFileName( m_hWnd, L"选择GGML模型文件", L"Bin文件 (*.bin)\0*.bin\0\0", path ) )
 		return 0;
 
 	modelPath.SetWindowText( path );
@@ -80,13 +80,13 @@ LRESULT LoadModelDlg::OnBrowse( UINT, INT, HWND, BOOL& bHandled )
 
 LRESULT LoadModelDlg::validationError( LPCTSTR message )
 {
-	reportError( m_hWnd, message, L"Unable to load the model" );
+	reportError( m_hWnd, message, L"无法加载模型" );
 	return 0;
 }
 
 LRESULT LoadModelDlg::validationError( LPCTSTR message, HRESULT hr )
 {
-	reportError( m_hWnd, message, L"Unable to load the model", hr );
+	reportError( m_hWnd, message, L"无法加载模型", hr );
 	return 0;
 }
 
@@ -110,13 +110,13 @@ LRESULT LoadModelDlg::OnOk( UINT, INT, HWND, BOOL& bHandled )
 {
 	modelPath.GetWindowText( path );
 	if( path.GetLength() <= 0 )
-		return validationError( L"Please select a model GGML file" );
+		return validationError( L"请选择模型GGML文件" );
 
 	{
 		CAtlFile file;
 		HRESULT hr = file.Create( path, GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING );
 		if( FAILED( hr ) )
-			return validationError( L"Unable to open the model file", hr );
+			return validationError( L"无法打开模型文件", hr );
 
 		ULONGLONG cb = 0;
 		file.GetSize( cb );
@@ -125,7 +125,7 @@ LRESULT LoadModelDlg::OnOk( UINT, INT, HWND, BOOL& bHandled )
 
 	impl = implGetValue( cbModelType );
 	if( impl == (Whisper::eModelImplementation)0 )
-		return validationError( L"Please select a model type" );
+		return validationError( L"请选择模型类型" );
 
 	setPending( true );
 	work.post();
@@ -196,7 +196,7 @@ LRESULT LoadModelDlg::OnCallbackStatus( UINT, WPARAM wParam, LPARAM, BOOL& bHand
 	const HRESULT hr = (HRESULT)wParam;
 	if( FAILED( hr ) )
 	{
-		LPCTSTR failMessage = L"Error loading the model";
+		LPCTSTR failMessage = L"加载模型出错";
 		if( loadError.GetLength() > 0 )
 		{
 			CString tmp = failMessage;
@@ -230,7 +230,7 @@ LRESULT LoadModelDlg::OnHyperlink( int idCtrl, LPNMHDR pnmh, BOOL& bHandled )
 
 	PNMLINK pNMLink = (PNMLINK)pnmh;
 	LPCTSTR url = pNMLink->item.szUrl;
-	ShellExecute( NULL, L"open", url, NULL, NULL, SW_SHOW );
+	ShellExecute( NULL, L"打开", url, NULL, NULL, SW_SHOW );
 	bHandled = TRUE;
 	return 0;
 }

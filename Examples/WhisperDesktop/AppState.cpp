@@ -43,7 +43,7 @@ HRESULT AppState::startup()
 	HRESULT hr = CoInitializeEx( nullptr, COINIT_MULTITHREADED );
 	if( FAILED( hr ) )
 	{
-		reportFatalError( "CoInitializeEx failed", hr );
+		reportFatalError( "CoInitializeEx失败", hr );
 		return hr;
 	}
 	coInit = true;
@@ -52,7 +52,7 @@ HRESULT AppState::startup()
 	if( lss != ERROR_SUCCESS )
 	{
 		hr = HRESULT_FROM_WIN32( lss );
-		reportFatalError( "Unable to open the registry key", hr );
+		reportFatalError( "无法打开注册表项", hr );
 		return hr;
 	}
 
@@ -62,28 +62,28 @@ HRESULT AppState::startup()
 	const BOOL icc = InitCommonControlsEx( &init );
 	if( !icc )
 	{
-		reportFatalError( "InitCommonControlsEx failed", HRESULT_FROM_WIN32( GetLastError() ) );
+		reportFatalError( "InitCommonControlsEx 失败", HRESULT_FROM_WIN32( GetLastError() ) );
 		return E_FAIL;
 	}
 
 	hr = initMediaFoundation( &mediaFoundation );
 	if( FAILED( hr ) )
 	{
-		reportFatalError( "Unable to initialize Media Foundation runtime", hr );
+		reportFatalError( "无法初始化媒体基础运行时", hr );
 		return hr;
 	}
 
 	hr = console.initialize();
 	if( FAILED( hr ) )
 	{
-		reportFatalError( "Unable to initialize logging", hr );
+		reportFatalError( "无法初始化日志记录", hr );
 		return hr;
 	}
 
 	hr = CircleIndicator::registerClass();
 	if( FAILED( hr ) )
 	{
-		reportFatalError( "Unable to register custom controls", hr );
+		reportFatalError( "无法注册自定义控件", hr );
 		return hr;
 	}
 	appIcon.LoadIcon( IDI_WHISPERDESKTOP );
